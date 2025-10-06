@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<form id="dashboardForm">
+  <!-- Seleção de Dashboard -->
+  <div class="mb-3">
+    <label for="dashboardSelect" class="form-label">Selecione o Dashboard:</label>
+    <select id="dashboardSelect" class="form-select" name="dashboard" required>
+      <option value="" disabled selected>-- Escolha um Dashboard --</option>
+      {% for dash in dashboards %}
+        <option value="{{ dash.link }}">
+          {{ dash.nome_dashboard }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <button type="button" id="loadDashboard" class="btn btn-primary w-100">Carregar Dashboard</button>
+</form>
+
+<!-- Iframe para exibir o Dashboard -->
+<div class="ratio ratio-16x9 mt-3">
+  <iframe 
+      id="dashboardFrame"
+      title="Dashboard"
+      src=""
+      frameborder="0"
+      allowfullscreen>
+  </iframe>
+</div>
+
+<!-- Script de controle do Dashboard -->
+<script>
+const dashboardSelect = document.getElementById('dashboardSelect');
+const dashboardFrame = document.getElementById('dashboardFrame');
+const loadButton = document.getElementById('loadDashboard');
+
+loadButton.addEventListener('click', function() {
+  const dashboardLink = dashboardSelect.value;
+
+  if (!dashboardLink) {
+    alert("Selecione um dashboard!");
+    return;
+  }
+
+  // Atualiza o iframe com o link selecionado
+  dashboardFrame.src = dashboardLink;
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base_admin.html" %}
+{% block title %}Registrar{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <div class="card shadow-sm">
+        <div class="card-header text-center">
+          <h4>Registrar Usuário</h4>
+        </div>
+        <div class="card-body">
+
+          <!-- Mensagens de flash -->
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+          <!-- Formulário de registro -->
+          <form method="POST">
+            <div class="mb-3">
+              <label for="username" class="form-label">Email Corporativo</label>
+              <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Senha Padrão</label>
+              <input type="text" class="form-control" value="Tahto@2025" readonly>
+              <div class="form-text">Todos os novos usuários receberão esta senha.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="tipo" class="form-label">Tipo de Usuário</label>
+              <select class="form-select" id="tipo" name="tipo" required>
+                <option value="" disabled selected>Selecione o tipo</option>
+                {% for tipo, classe in tipos %}
+                  <option value="{{ tipo }}">{{ classe }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Botão Registrar com cor personalizada -->
+            <style>
+              #registerButton {
+                background-color: #5B4492; /* cor roxa */
+                color: white;              /* texto branco */
+                border: none;
+              }
+
+              #registerButton:hover {
+                background-color: #483476; /* tom mais escuro ao passar o mouse */
+              }
+            </style>
+
+            <div class="d-grid">
+              <button type="submit" id="registerButton" class="btn">Registrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

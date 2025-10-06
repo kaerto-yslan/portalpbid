@@ -1,0 +1,63 @@
+{% extends "base_admin.html" %}
+{% block title %}Cadastro de Dashboard{% endblock %}
+{% block content %}
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <!-- Card com borda e sombra -->
+      <div class="card shadow-sm border">
+        <!-- Título do card centralizado -->
+        <div class="card-header text-center">
+          <h4 class="mb-0">Cadastrar Dashboard</h4>
+        </div>
+
+        <div class="card-body p-4">
+
+          <!-- Formulário de cadastro de dashboard -->
+          <form method="POST">
+            <div class="mb-3">
+              <label for="cliente" class="form-label fw-semibold">Cliente</label>
+              <select class="form-select" id="cliente" name="cliente" required>
+                <option value="" disabled selected>Selecione o cliente</option>
+                {% for tipo, classe in tipos %}
+                  <option value="{{ classe }}">{{ classe }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="nome" class="form-label fw-semibold">Nome do Dashboard</label>
+              <input type="text" class="form-control" id="nome" name="nome" placeholder="Ex: Vendas 2025" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="link" class="form-label fw-semibold">Link do Dashboard</label>
+              <input type="url" class="form-control" id="link" name="link" placeholder="https://..." required>
+            </div>
+
+            <!-- Botão Cadastrar com cor personalizada -->
+            <style>
+              #cadastrarButton {
+                background-color: #5B4492; /* cor roxa */
+                color: white;              /* texto branco */
+                border: none;
+              }
+
+              #cadastrarButton:hover {
+                background-color: #483476; /* tom mais escuro ao passar o mouse */
+              }
+            </style>
+
+            <div class="d-grid mt-4">
+              <button type="submit" id="cadastrarButton" class="btn btn-lg">Cadastrar</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

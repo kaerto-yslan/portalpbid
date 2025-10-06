@@ -1,0 +1,23 @@
+{% extends "base_admin.html" %}
+{% block title %}Editar Dashboard{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Editar Dashboard</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="cliente" class="form-label">Cliente</label>
+            <input type="text" class="form-control" id="cliente" name="cliente" value="{{ dashboard['cliente'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" value="{{ dashboard['nome'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="link" class="form-label">Link</label>
+            <input type="url" class="form-control" id="link" name="link" value="{{ dashboard['link'] }}" required>
+        </div>
+        <button type="submit" class="btn btn-success">Salvar Alterações</button>
+        <a href="{{ url_for('gestao_dashboards') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

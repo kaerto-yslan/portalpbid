@@ -1,0 +1,32 @@
+{% extends "base_admin.html" %}
+{% block title %}Gestão de Dashboards{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Gestão de Dashboards</h2>
+    <table class="table table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Cliente</th>
+                <th>Nome</th>
+                <th>Link</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dashboard in dashboards %}
+            <tr>
+                <td>{{ dashboard['cliente'] }}</td>
+                <td>{{ dashboard['nome'] }}</td>
+                <td><a href="{{ dashboard['link'] }}" target="_blank">Abrir</a></td>
+                <td>
+                    <a href="{{ url_for('editar_dashboard', id=dashboard['id']) }}" class="btn btn-sm btn-primary">Editar</a>
+                    <form action="{{ url_for('excluir_dashboard', id=dashboard['id']) }}" method="POST" style="display:inline-block;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este dashboard?');">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

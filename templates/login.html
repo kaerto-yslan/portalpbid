@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-5">
+    <h3 class="text-center mb-4">Login</h3>
+
+    <!-- Formulário de login -->
+    <form method="post">
+      <div class="mb-3">
+        <label class="form-label">Email Corporativo</label>
+        <input type="text" class="form-control" name="username" required autocomplete="username">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Senha</label>
+        <input type="password" class="form-control" name="password" required autocomplete="current-password">
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <!-- Botão Entrar com cor personalizada -->
+        <style>
+          #loginButton {
+            background-color: #5B4492; /* cor roxa */
+            color: white;              /* texto branco */
+            border: none;
+          }
+
+          #loginButton:hover {
+            background-color: #483476; /* tom mais escuro ao passar o mouse */
+          }
+        </style>
+        <button type="submit" id="loginButton" class="btn">Entrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
