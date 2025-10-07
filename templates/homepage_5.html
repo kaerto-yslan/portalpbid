@@ -1,49 +1,77 @@
 {% extends "base.html" %}
-{% block title %}Dashboards Icatu{% endblock %}
+{% block title %}Dashboards Nio{% endblock %}
 {% block content %}
 
 <h1 class="mb-4 text-center">Bem-vindo ao ambiente Nio</h1>
 
-<!-- Seleção de Dashboard -->
-<div class="mb-3">
-  <label for="dashboardSelect" class="form-label">Selecione o Dashboard:</label>
-  <select id="dashboardSelect" class="form-select" name="homepage_7" required>
-    <option value="" disabled selected>-- Escolha um Dashboard --</option>
+<div class="mb-3 position-relative">
+  <label for="dashboardInput" class="form-label">Selecione ou digite um Dashboard:</label>
+  <input type="text" id="dashboardInput" class="form-control" placeholder="Escolha ou digite um Dashboard" autocomplete="off">
+
+  <ul id="dashboardDropdown" class="list-group position-absolute w-100" style="z-index:1000; max-height:200px; overflow-y:auto; display:none;">
     {% for dash in dashboards %}
-      <option value="{{ dash['link'] }}" data-cliente="{{ dash['cliente'] }}">
+      <li class="list-group-item list-group-item-action" data-link="{{ dash['link'] }}">
         {{ dash['nome_dashboard'] }}
-      </option>
+      </li>
     {% endfor %}
-  </select>
+  </ul>
 </div>
 
-<button type="button" id="loadDashboard" class="btn btn-primary">Carregar Dashboard</button>
+<button type="button" id="loadDashboard" class="btn btn-primary mt-2">Carregar Dashboard</button>
 
-<!-- Iframe para exibir o Dashboard -->
 <div class="ratio ratio-16x9 mt-3">
-  <iframe 
-      id="dashboardFrame"
-      title="Dashboard"
-      src=""
-      frameborder="0"
-      allowfullscreen>
-  </iframe>
+  <iframe id="dashboardFrame" title="Dashboard" src="" frameborder="0" allowfullscreen></iframe>
 </div>
 
-<!-- Script de controle do Dashboard -->
 <script>
-const dashboardSelect = document.getElementById('dashboardSelect');
+const input = document.getElementById('dashboardInput');
+const dropdown = document.getElementById('dashboardDropdown');
 const dashboardFrame = document.getElementById('dashboardFrame');
 const loadButton = document.getElementById('loadDashboard');
 
-loadButton.addEventListener('click', function() {
-  const selectedOption = dashboardSelect.options[dashboardSelect.selectedIndex];
-  const dashboardLink = selectedOption.value;
+// Abrir dropdown ao focar
+input.addEventListener('focus', () => {
+  dropdown.style.display = 'block';
+});
 
-  if(dashboardLink){
-    dashboardFrame.src = dashboardLink;
+// Filtrar opções conforme digita
+input.addEventListener('input', () => {
+  const value = input.value.toLowerCase();
+  let hasMatch = false;
+  dropdown.querySelectorAll('li').forEach(li => {
+    if(li.textContent.toLowerCase().includes(value)){
+      li.style.display = '';
+      hasMatch = true;
+    } else {
+      li.style.display = 'none';
+    }
+  });
+  dropdown.style.display = hasMatch ? 'block' : 'none';
+});
+
+// Selecionar item clicando
+dropdown.addEventListener('click', e => {
+  if(e.target.tagName === 'LI'){
+    input.value = e.target.textContent;
+    input.dataset.link = e.target.dataset.link;
+    dropdown.style.display = 'none';
+  }
+});
+
+// Fechar dropdown ao clicar fora
+document.addEventListener('click', e => {
+  if(!input.contains(e.target) && !dropdown.contains(e.target)){
+    dropdown.style.display = 'none';
+  }
+});
+
+// Carregar dashboard
+loadButton.addEventListener('click', () => {
+  const link = input.dataset.link;
+  if(link){
+    dashboardFrame.src = link;
   } else {
-    alert("Selecione um dashboard antes de carregar!");
+    alert("Selecione um dashboard válido!");
   }
 });
 </script>
