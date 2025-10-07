@@ -73,7 +73,7 @@ def change_password_first_time():
             conn.commit()
 
         flash("Senha alterada com sucesso!", "success")
-        return redirect(url_for("homepage.html"))
+        return redirect(url_for("homepage"))
 
     return render_template("primeira_troca_senha.html", username=current_user.username)
 

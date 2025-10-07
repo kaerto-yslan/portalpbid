@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Dashboards Icatu{% endblock %}
+{% block content %}
+
+<h1 class="mb-4 text-center">Bem-vindo ao ambiente Zara</h1>
+
+<!-- Seleção de Dashboard -->
+<div class="mb-3">
+  <label for="dashboardSelect" class="form-label">Selecione o Dashboard:</label>
+  <select id="dashboardSelect" class="form-select" name="homepage_7" required>
+    <option value="" disabled selected>-- Escolha um Dashboard --</option>
+    {% for dash in dashboards %}
+      <option value="{{ dash['link'] }}" data-cliente="{{ dash['cliente'] }}">
+        {{ dash['nome_dashboard'] }}
+      </option>
+    {% endfor %}
+  </select>
+</div>
+
+<button type="button" id="loadDashboard" class="btn btn-primary">Carregar Dashboard</button>
+
+<!-- Iframe para exibir o Dashboard -->
+<div class="ratio ratio-16x9 mt-3">
+  <iframe 
+      id="dashboardFrame"
+      title="Dashboard"
+      src=""
+      frameborder="0"
+      allowfullscreen>
+  </iframe>
+</div>
+
+<!-- Script de controle do Dashboard -->
+<script>
+const dashboardSelect = document.getElementById('dashboardSelect');
+const dashboardFrame = document.getElementById('dashboardFrame');
+const loadButton = document.getElementById('loadDashboard');
+
+loadButton.addEventListener('click', function() {
+  const selectedOption = dashboardSelect.options[dashboardSelect.selectedIndex];
+  const dashboardLink = selectedOption.value;
+
+  if(dashboardLink){
+    dashboardFrame.src = dashboardLink;
+  } else {
+    alert("Selecione um dashboard antes de carregar!");
+  }
+});
+</script>
+
+{% endblock %}
