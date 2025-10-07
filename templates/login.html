@@ -19,20 +19,31 @@
         <input type="password" class="form-control" name="password" required autocomplete="current-password">
       </div>
 
-      <div class="d-flex justify-content-between align-items-center">
-        <!-- Botão Entrar com cor personalizada -->
+      <div class="d-flex justify-content-between">
+        <!-- Estilo compartilhado dos botões -->
         <style>
-          #loginButton {
+          .custom-btn {
             background-color: #5B4492; /* cor roxa */
-            color: white;              /* texto branco */
+            color: white;
             border: none;
+            width: 20%;
           }
 
-          #loginButton:hover {
+          .custom-btn:hover {
             background-color: #483476; /* tom mais escuro ao passar o mouse */
           }
         </style>
-        <button type="submit" id="loginButton" class="btn">Entrar</button>
+
+        <!-- Botão Entrar -->
+        <button type="submit" class="btn custom-btn">Entrar</button>
+
+        <!-- Botão Externo -->
+        <a href="https://forms.clickup.com/3106860/f/2yu1c-271897/XWYC2HBR14MRMQ31KM" 
+           class="btn custom-btn text-center"
+           target="_blank" 
+           rel="noopener noreferrer">
+           Reset de Senha
+        </a>
       </div>
     </form>
   </div>

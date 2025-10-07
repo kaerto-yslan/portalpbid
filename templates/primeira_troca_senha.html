@@ -4,16 +4,41 @@
 {% block content %}
 <div class="container mt-5">
   <h2>Alterar senha (primeiro acesso)</h2>
-  <form method="POST">
+  <form method="POST" id="changePasswordForm">
     <div class="mb-3">
       <label>Nova senha</label>
-      <input type="password" name="new_password" class="form-control" required>
+      <input type="password" name="new_password" class="form-control" id="new_password" required>
+      <small class="form-text text-muted">
+        A senha deve ter no minimo 6 caracteres, incluir uma letra maiúscula, uma minúscula, um número e um caractere especial.
+      </small>
     </div>
     <div class="mb-3">
       <label>Confirmar nova senha</label>
-      <input type="password" name="confirm_password" class="form-control" required>
+      <input type="password" name="confirm_password" class="form-control" id="confirm_password" required>
     </div>
     <button type="submit" class="btn btn-primary">Alterar senha</button>
   </form>
 </div>
+
+<script>
+document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+    const password = document.getElementById('new_password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+
+    // Regex para validar senha
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,20}$/;
+
+    if (!regex.test(password)) {
+        alert('Senha inválida! Certifique-se de que ela tem no minimo 6 caracteres, uma maiúscula, uma minúscula, um número e um caractere especial.');
+        e.preventDefault();
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert('As senhas não coincidem!');
+        e.preventDefault();
+        return;
+    }
+});
+</script>
 {% endblock %}
