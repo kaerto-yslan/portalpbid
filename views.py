@@ -244,7 +244,7 @@ def logout():
 @app.route('/gestao_dashboards')
 def gestao_dashboards():
     conn = get_db_connection()
-    dashboards = conn.execute('SELECT * FROM dashboard').fetchall()
+    dashboards = conn.execute('SELECT * FROM dashboard order by "cliente","nome"').fetchall()
     conn.close()
     return render_template('gestao_dashboards.html', dashboards=dashboards)
 
@@ -289,6 +289,7 @@ def gestao_usuarios():
         FROM users a
         LEFT JOIN tipo_usuario b ON a.tipo = b.tipo
         where a.username <> 'admin'
+        order by "username"                    
     """).fetchall()
     conn.close()
 
