@@ -190,7 +190,7 @@ def homepage():
 @app.route("/register_dashboard", methods=["GET", "POST"])
 @login_required
 def register_dashboard():
-    tipos = get_tipos()
+    tipos = get_tipos()  # Lista de clientes/tipos para o form
 
     if request.method == "POST":
         cliente = request.form.get("cliente", "").strip()
@@ -203,9 +203,22 @@ def register_dashboard():
 
         try:
             with get_db_connection() as conn:
-                conn.execute(
-                    "INSERT INTO dashboard (cliente, nome, link) VALUES (?, ?, ?)",
-                    (cliente, nome, link)
+                cursor = conn.cursor()
+
+                # Buscar o tipo correspondente ao cliente
+                cursor.execute("SELECT tipo FROM tipo_usuario WHERE classe = ?", (cliente,))
+                resultado = cursor.fetchone()
+
+                if not resultado:
+                    flash("Cliente não encontrado na tabela de tipos.", "danger")
+                    return render_template("register_dashboard.html", tipos=tipos)
+
+                tipo_id = resultado[0]  # Esse é o valor que deve ir na coluna 'id'
+
+                # Inserir na tabela dashboard, incluindo o 'id'
+                cursor.execute(
+                    "INSERT INTO dashboard (cliente, nome, link, id) VALUES (?, ?, ?, ?)",
+                    (cliente, nome, link, tipo_id)
                 )
                 conn.commit()
 

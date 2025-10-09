@@ -124,10 +124,10 @@ def init_db():
         );
 
         CREATE TABLE IF NOT EXISTS dashboard (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
             cliente TEXT NOT NULL,
             nome TEXT NOT NULL,
-            link TEXT NOT NULL
+            link TEXT NOT NULL,
+            id INTEGER PRIMARY KEY AUTOINCREMENT
         );
 
         CREATE TABLE IF NOT EXISTS tipo_usuario (
